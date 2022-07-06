@@ -12,7 +12,7 @@ node{
        sh "${mvnHome}/bin/mvn package"
       }
 /*   stage ('Stop Tomcat Server') {
-               bat ''' @ECHO OFF
+               sh ''' @ECHO OFF
                wmic process list brief | find /i "tomcat" > NUL
                IF ERRORLEVEL 1 (
                     echo  Stopped
@@ -24,11 +24,11 @@ node{
 '''
    }*/
    stage('Deploy to Tomcat'){
-     bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
+     sh "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
    }
       stage ('Start Tomcat Server') {
          sleep(time:5,unit:"SECONDS") 
-         bat "${tomcatBin}\\startup.bat"
+          sh "${tomcatBin}\\startup.bat"
          sleep(time:100,unit:"SECONDS")
    }
 }
